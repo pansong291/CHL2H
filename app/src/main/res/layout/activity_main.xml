@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:gravity="center_horizontal">
+
+  <EditText
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:id="@+id/edt_main_unknown_class"
+    android:hint="未被识别的类名,多个用.(英文点号)分开"
+    android:maxLines="2"
+    android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890."
+    android:textSize="14sp"
+    android:textColor="#000000"
+    android:textColorHint="#8A8A8A"/>
+  
+	<EditText
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:id="@+id/edt_main_src"
+		android:hint="源代码"
+		android:maxLines="10"
+		android:textSize="14sp"
+		android:textColor="#000000"
+		android:textColorHint="#8A8A8A"/>
+
+	<Button
+		style="?android:attr/buttonBarButtonStyle"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:text="转换"
+		android:onClick="onBtnClick"
+		android:textColor="#000000"
+		android:textSize="14sp"/>
+
+	<ScrollView
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent">
+
+		<TextView
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			android:id="@+id/txt_main_output"
+			android:textSize="14sp"
+      android:onClick="onTxtClick"
+			android:textColor="#000000"/>
+
+	</ScrollView>
+
+</LinearLayout>
+
