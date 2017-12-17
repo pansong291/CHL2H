@@ -65,7 +65,7 @@ public class MyTask extends AsyncTask<String,Integer,String>
  protected String doInBackground(String[] p1)
  {
   String s=p1[1].replaceAll(" +(?=\\n)","")
-   .replaceAll("(?<!\\n) +(?!/[/\\*])",ReplaceStr.NBSP)
+   .replaceAll("(?<![\\n ]) +(?!/[/\\*])",ReplaceStr.NBSP)
    .replace(" ",ReplaceStr.NBSP)
    .replace("<",ReplaceStr.LT)
    .replace(">",ReplaceStr.GT)
@@ -79,7 +79,7 @@ public class MyTask extends AsyncTask<String,Integer,String>
   matchReplace("(?<!\\\\)'.*?(?<!\\\\)'",b,ReplaceStr.SPAN_R); //单引号字符
   matchReplace(ma.getResources().getString(R.string.regex_class),b,ReplaceStr.SPAN_B); //部分类名(声明,实例化,静态调用)
   matchReplace("\\b\\d+\\.\\d+[dDfF]?\\b|\\.\\d+[dDfF]?\\b",b,ReplaceStr.SPAN_R); //小数(D,F型)
-  matchResult("[\\+\\-\\*\\/\\!\\=\\|\\^\\~\\?\\%]+",b,ReplaceStr.SPAN_G); //绿色符号+-*/!=|^~?%
+  matchResult("[\\+\\-\\*\\/\\!\\=\\|\\^\\~\\?\\%]+",b,ReplaceStr.SPAN_G); //绿色符号*+-/!=|^~?%
   matchResult("[\\(\\)\\[\\]\\{\\}\\:\\;\\,\\.]+",b,ReplaceStr.SPAN_B); //蓝色符号.,:;()[]{}
   matchResult("\\b0x?\\d+\\b|(?<!┠)\\b\\d+[lL]?\\b(?!┨)",b,ReplaceStr.SPAN_R); //整数(十,八,十六进制,L型)
   matchResult("\\btrue\\b|\\bfalse\\b|\\bnull\\b",b,ReplaceStr.SPAN_R); //布尔值,空值
