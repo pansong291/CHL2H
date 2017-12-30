@@ -33,7 +33,12 @@ public class MyTask extends AsyncTask<String,Integer,String>
   while(m.find())
   {
    StrIndex si=new StrIndex(m.start(),m.end());
-   si.setKey((ListRepStr.getListRS().addItem(color+s.substring(si.start,si.end)+ReplaceStr.SPAN_E)));
+   si.setKey(ListRepStr.getListRS().addItem(
+              color+s.substring(si.start,si.end)
+              .replace("&","&amp;")
+              .replace(" ","&nbsp;")
+              .replace("<","&lt;")
+              .replace(">","&gt;")+ReplaceStr.SPAN_E));
    listSI.add(si);
   }
   for(int i=listSI.size()-1;i>=0;i--)
@@ -64,19 +69,21 @@ public class MyTask extends AsyncTask<String,Integer,String>
  @Override
  protected String doInBackground(String[] p1)
  {
-  String s=p1[1].replaceAll(" +(?=\\n)","")
-   .replaceAll("(?<![\\n ]) +(?!/[/\\*])",ReplaceStr.NBSP)
-   .replace(" ",ReplaceStr.NBSP)
-   .replace("<",ReplaceStr.LT)
-   .replace(">",ReplaceStr.GT)
-   .replace("&",ReplaceStr.AMP)
-   .replace("\n",ReplaceStr.BR);
-  StringBuilder b=new StringBuilder(s);
-  s=p1[0];
+  StringBuilder b=new StringBuilder(p1[1].replace("\n",ReplaceStr.BR));
   matchReplace("\\/\\*.*?\\*\\/",b,ReplaceStr.SPAN_G); //多行注释
   matchReplace("\\/\\/.*?(?="+ReplaceStr.BR+")|\\/\\/.*$",b,ReplaceStr.SPAN_G); //单行注释
   matchReplace("(?<!\\\\)\".*?(?<!\\\\)\"",b,ReplaceStr.SPAN_R); //双引号字符串
   matchReplace("(?<!\\\\)'.*?(?<!\\\\)'",b,ReplaceStr.SPAN_R); //单引号字符
+  
+  String s=b.toString().replaceAll(" +(?=\\n)","")
+   .replaceAll("(?<![\\n ]) +(?!/[/\\*])",ReplaceStr.NBSP)
+   .replace(" ",ReplaceStr.NBSP)
+   .replace("&",ReplaceStr.AMP)
+   .replace("<",ReplaceStr.LT)
+   .replace(">",ReplaceStr.GT);
+  b=new StringBuilder(s);
+  s=p1[0];
+  
   matchReplace(ma.getResources().getString(R.string.regex_class),b,ReplaceStr.SPAN_B); //部分类名(声明,实例化,静态调用)
   matchReplace("\\b\\d+\\.\\d+[dDfF]?\\b|\\.\\d+[dDfF]?\\b",b,ReplaceStr.SPAN_R); //小数(D,F型)
   matchResult("[\\+\\-\\*\\/\\!\\=\\|\\^\\~\\?\\%]+",b,ReplaceStr.SPAN_G); //绿色符号*+-/!=|^~?%
