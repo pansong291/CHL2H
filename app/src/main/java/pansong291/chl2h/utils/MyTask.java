@@ -85,7 +85,7 @@ public class MyTask extends AsyncTask<String,Integer,String>
   s=p1[0];
   
   matchReplace(ma.getResources().getString(R.string.regex_class),b,ReplaceStr.SPAN_B); //部分类名(声明,实例化,静态调用)
-  matchReplace("\\b\\d+\\.\\d+[dDfF]?\\b|\\.\\d+[dDfF]?\\b",b,ReplaceStr.SPAN_R); //小数(D,F型)
+  matchReplace("\\b\\d+\\.\\d+e[+-]?\\d+\\b|\\.\\d+e[+-]?\\d+\\b|\\b\\d+\\.?e[+-]?\\d+\\b|\\b\\d+\\.\\d+[dDfF]?|\\.\\d+[dDfF]?|\\b\\d+\\.?[dDfF]?",b,ReplaceStr.SPAN_R); //小数(指数型,D,F型)
   matchResult("[\\+\\-\\*\\/\\!\\=\\|\\^\\~\\?\\%]+",b,ReplaceStr.SPAN_G); //绿色符号*+-/!=|^~?%
   matchResult("[\\(\\)\\[\\]\\{\\}\\:\\;\\,\\.]+",b,ReplaceStr.SPAN_B); //蓝色符号.,:;()[]{}
   matchResult("\\b0x?\\d+\\b|(?<!┠)\\b\\d+[lL]?\\b(?!┨)",b,ReplaceStr.SPAN_R); //整数(十,八,十六进制,L型)
