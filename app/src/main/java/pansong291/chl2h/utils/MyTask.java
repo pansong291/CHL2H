@@ -75,8 +75,8 @@ public class MyTask extends AsyncTask<String,Integer,String>
   matchReplace("(?<!\\\\)\".*?(?<!\\\\)\"",b,ReplaceStr.SPAN_R); //双引号字符串
   matchReplace("(?<!\\\\)'.*?(?<!\\\\)'",b,ReplaceStr.SPAN_R); //单引号字符
   
-  String s=b.toString().replaceAll(" +(?=\\n)","")
-   .replaceAll("(?<![\\n ]) +(?!/[/\\*])",ReplaceStr.NBSP)
+  String s=b.toString().replaceAll(" +(?="+ReplaceStr.BR+")","")
+   .replaceAll("(?<!["+ReplaceStr.BR+" ]{1,4}) +(?!/[/\\*])",ReplaceStr.NBSP)
    .replace(" ",ReplaceStr.NBSP)
    .replace("&",ReplaceStr.AMP)
    .replace("<",ReplaceStr.LT)
