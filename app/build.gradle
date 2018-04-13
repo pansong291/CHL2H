@@ -8,7 +8,7 @@ android {
         applicationId "pansong291.chl2h"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 1
+        versionCode 20180413
         versionName "1.0"
     }
     buildTypes {
