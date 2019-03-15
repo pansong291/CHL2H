@@ -19,6 +19,8 @@
         </activity>
         <activity
             android:name=".ui.CrashActivity"/>
+        <activity
+            android:name=".ui.WebActivity"/>
     </application>
 
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>

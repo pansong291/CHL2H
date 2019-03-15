@@ -1,16 +1,11 @@
 package pansong291.chl2h.utils;
 
 import android.os.AsyncTask;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pansong291.chl2h.R;
 import pansong291.chl2h.ui.MainActivity;
-import android.os.Environment;
 
 public class MyTask extends AsyncTask<String,Integer,String>
 {
@@ -70,26 +65,7 @@ public class MyTask extends AsyncTask<String,Integer,String>
   }
   listSI.clear();
  }
- 
- private boolean write2File(String s)
- {
-  File dir=Environment.getExternalStorageDirectory();
   
-  String fileNameString="JavaCode_"+System.currentTimeMillis()+".html";
-  File file=new File(dir,fileNameString);
-  
-  BufferedWriter bw=null;
-  try{
-   bw=new BufferedWriter(new FileWriter(file));
-   bw.write(s);
-   bw.close();
-  }catch(IOException e)
-  {
-   return false;
-  }
-  return true;
- }
- 
  @Override
  protected String doInBackground(String[] p1)
  {
@@ -129,7 +105,6 @@ public class MyTask extends AsyncTask<String,Integer,String>
   }
   
   s="<html><body><p style=\"font-family:monospace,'Droid Sans Mono','Courier New';\">\n"+s+"\n</p></body></html>";
-  write2File(s);
   return s;
  }
 

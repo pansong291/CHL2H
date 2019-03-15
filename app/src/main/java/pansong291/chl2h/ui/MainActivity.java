@@ -1,17 +1,24 @@
 package pansong291.chl2h.ui;
 
-import android.app.*;
-import android.os.*;
-import pansong291.chl2h.R;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.os.Bundle;
+import android.os.Environment;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.view.View;
-import pansong291.chl2h.utils.MyTask;
-import android.content.DialogInterface.OnClickListener;
-import android.content.DialogInterface;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.regex.Pattern;
+import pansong291.chl2h.R;
+import pansong291.chl2h.utils.MyTask;
+import android.text.Html;
+import android.content.Intent;
 
-public class MainActivity extends Zactivity 
+public class MainActivity extends Zactivity implements OnClickListener
 {
  EditText edt_unknown,edt_src;
  TextView txt;
@@ -59,20 +66,35 @@ public class MainActivity extends Zactivity
   if(altdlg==null)
   {
    altdlg=new AlertDialog.Builder(this)
-   .setMessage("复制内容")
-   .setPositiveButton("确定",new OnClickListener()
-    {
-     @Override
-     public void onClick(DialogInterface p1,int p2)
-     {
-      ((android.text.ClipboardManager)getSystemService(CLIPBOARD_SERVICE)).setText(txt.getText());
-      toast("已复制");
-     }
-    })
-   .setNegativeButton("取消",null)
+   .setMessage("选择一个操作")
+   .setPositiveButton("复制内容",this)
+   .setNegativeButton("写到文件",this)
+   .setNeutralButton("预览",this)
    .create();
   }
   altdlg.show();
+ }
+ 
+ public void onClick(DialogInterface p1,int p2)
+ {
+  switch(p2)
+  {
+   case DialogInterface.BUTTON_POSITIVE:
+    ((android.text.ClipboardManager)getSystemService(CLIPBOARD_SERVICE)).setText(txt.getText());
+    toast("已复制");
+    break;
+   
+   case DialogInterface.BUTTON_NEGATIVE:
+    write2File(txt.getText().toString());
+    toast("已写到设备储存中");
+    break;
+    
+   case DialogInterface.BUTTON_NEUTRAL:
+    Intent it = new Intent(this, WebActivity.class);
+    it.putExtra("data",txt.getText());
+    startActivity(it);
+    break;
+  }
  }
  
  public void setResult(String s)
@@ -102,6 +124,31 @@ public class MainActivity extends Zactivity
   ipPreference(edtUnknownStr,edt_unknown.getText().toString());
   ipPreference(edtSrcStr,edt_src.getText().toString());
   ipPreference(txtStr,txt.getText().toString());
+ }
+
+ private boolean write2File(String s)
+ {
+  boolean b=false;
+  File dir=Environment.getExternalStorageDirectory();
+  String fileNameString="JavaCode_"+System.currentTimeMillis()+".html";
+  File file=new File(dir,fileNameString);
+
+  BufferedWriter bw=null;
+  try{
+   bw=new BufferedWriter(new FileWriter(file));
+   bw.write(s);
+   b=true;
+  }catch(IOException e)
+  {
+   e.printStackTrace();
+  }
+  try{
+   if(bw!=null)bw.close();
+  }catch(Exception e)
+  {
+   e.printStackTrace();
+  }
+  return b;
  }
  
 }
